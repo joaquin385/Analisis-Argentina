@@ -17,7 +17,11 @@ const elementos = {
     estadoCarga: document.getElementById('estado-carga'),
     mensajeError: document.getElementById('mensaje-error'),
     contenedorAnalisis: document.getElementById('contenedor-analisis'),
-    analisisTexto: document.getElementById('analisis-texto')
+    analisisTexto: document.getElementById('analisis-texto'),
+    filtrosToggle: document.getElementById('filtros-toggle'),
+    filtrosContenido: document.getElementById('filtros-contenido'),
+    filtrosSection: document.querySelector('.filtros'),
+    toggleDarkMode: document.getElementById('toggle-dark-mode')
 };
 
 // Inicialización
@@ -42,6 +46,22 @@ async function inicializar() {
         elementos.selectorCategoria.addEventListener('change', onCategoriaCambio);
         elementos.selectorSubcategoria.addEventListener('change', onSubcategoriaCambio);
         elementos.selectorPeriodo.addEventListener('change', onPeriodoCambio);
+        
+        // Toggle filtros (mobile) - colapsar por defecto en mobile
+        if (elementos.filtrosToggle && elementos.filtrosSection) {
+            elementos.filtrosToggle.addEventListener('click', toggleFiltros);
+            // En mobile, colapsar por defecto
+            if (window.innerWidth <= 767) {
+                elementos.filtrosSection.classList.add('contenido-colapsado');
+            }
+        }
+        
+        // Toggle dark mode
+        if (elementos.toggleDarkMode) {
+            elementos.toggleDarkMode.addEventListener('click', toggleDarkMode);
+            // Cargar preferencia guardada
+            cargarTemaGuardado();
+        }
         
         // Leer parámetros de URL después de cargar todo
         await leerParametrosURL();
@@ -478,6 +498,35 @@ async function leerParametrosURL() {
         // Cargar análisis si hay categoría y periodo
         if (estado.categoriaSeleccionada && estado.periodoSeleccionado) {
             cargarAnalisis();
+        }
+    }
+}
+
+// Funciones para filtros colapsables
+function toggleFiltros() {
+    if (elementos.filtrosSection) {
+        elementos.filtrosSection.classList.toggle('contenido-colapsado');
+        elementos.filtrosSection.classList.toggle('contenido-expandido');
+    }
+}
+
+// Funciones para dark mode
+function toggleDarkMode() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+function cargarTemaGuardado() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+        // Detectar preferencia del sistema
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
         }
     }
 }

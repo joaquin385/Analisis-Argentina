@@ -10,31 +10,51 @@
 </head>
 <body>
     <header>
-        <h1>Análisis Argentina</h1>
-        <p class="subtitulo-ia">Análisis generado por inteligencia artificial</p>
+        <div class="header-content">
+            <div>
+                <h1>Análisis Argentina</h1>
+                <p class="subtitulo-ia">Análisis generado por inteligencia artificial</p>
+            </div>
+            <button id="toggle-dark-mode" class="toggle-dark-mode" aria-label="Cambiar modo oscuro/claro">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+        </div>
     </header>
 
     <main>
         <section class="filtros">
-            <div class="filtro-grupo">
-                <label for="selector-categoria">Categoría:</label>
-                <select id="selector-categoria">
-                    <option value="">Seleccione una categoría</option>
-                </select>
-            </div>
+            <button class="filtros-toggle" id="filtros-toggle" aria-label="Mostrar/ocultar filtros">
+                <span class="filtros-toggle-text">Filtros</span>
+                <span class="filtros-toggle-icon">▼</span>
+            </button>
+            <div class="filtros-contenido" id="filtros-contenido">
+                <div class="filtro-grupo">
+                    <label for="selector-categoria">Categoría:</label>
+                    <div class="select-wrapper">
+                        <select id="selector-categoria">
+                            <option value="">Seleccione una categoría</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="filtro-grupo">
-                <label for="selector-subcategoria">Subcategoría:</label>
-                <select id="selector-subcategoria" disabled>
-                    <option value="">Seleccione una subcategoría</option>
-                </select>
-            </div>
+                <div class="filtro-grupo">
+                    <label for="selector-subcategoria">Subcategoría:</label>
+                    <div class="select-wrapper">
+                        <select id="selector-subcategoria" disabled>
+                            <option value="">Seleccione una subcategoría</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="filtro-grupo">
-                <label for="selector-periodo">Período:</label>
-                <select id="selector-periodo" disabled>
-                    <option value="">Seleccione un período</option>
-                </select>
+                <div class="filtro-grupo">
+                    <label for="selector-periodo">Período:</label>
+                    <div class="select-wrapper">
+                        <select id="selector-periodo" disabled>
+                            <option value="">Seleccione un período</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </section>
 

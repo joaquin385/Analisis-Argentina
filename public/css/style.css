@@ -12,10 +12,20 @@
     --color-borde: #e5e7eb;
     --color-error: #dc2626;
     --color-exito: #16a34a;
+    --color-filtros-fondo: #f9fafb;
     --espaciado-mobile: 1rem;
     --espaciado-desktop: 2rem;
     --radio-borde: 0.5rem;
     --tamaño-fuente-base: 16px; /* Mínimo para evitar zoom en iOS */
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+    --color-fondo: #1a1a1a;
+    --color-texto: #e5e7eb;
+    --color-acento: #3b82f6;
+    --color-borde: #374151;
+    --color-filtros-fondo: #111827;
 }
 
 html {
@@ -33,6 +43,7 @@ body {
     margin: 0;
     overflow-x: hidden;
     word-wrap: break-word;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Header - Mobile First */
@@ -40,11 +51,21 @@ header {
     background-color: var(--color-acento);
     color: white;
     padding: 1rem;
-    text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.header-content > div:first-child {
+    flex: 1;
 }
 
 header h1 {
@@ -62,6 +83,37 @@ header .subtitulo-ia {
     font-style: italic;
 }
 
+.toggle-dark-mode {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 1.2rem;
+    padding: 0;
+}
+
+.toggle-dark-mode:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.toggle-dark-mode .icon-moon {
+    display: none;
+}
+
+[data-theme="dark"] .toggle-dark-mode .icon-sun {
+    display: none;
+}
+
+[data-theme="dark"] .toggle-dark-mode .icon-moon {
+    display: block;
+}
+
 /* Main - Mobile First */
 main {
     max-width: 100%;
@@ -72,11 +124,75 @@ main {
 
 /* Filtros - Mobile First */
 .filtros {
-    background-color: #f9fafb;
-    padding: var(--espaciado-mobile);
+    background-color: var(--color-filtros-fondo);
     border-radius: var(--radio-borde);
     margin-bottom: var(--espaciado-mobile);
     border: 1px solid var(--color-borde);
+    overflow: hidden;
+}
+
+.filtros-toggle {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background-color: var(--color-acento);
+    color: white;
+    border: none;
+    border-radius: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.filtros-toggle:hover {
+    background-color: #1d4ed8;
+}
+
+.filtros-toggle-icon {
+    transition: transform 0.3s;
+    font-size: 0.875rem;
+}
+
+.filtros.contenido-colapsado .filtros-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.filtros-contenido {
+    padding: var(--espaciado-mobile);
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    overflow: hidden;
+}
+
+.filtros.contenido-colapsado .filtros-contenido {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* En mobile, los filtros empiezan colapsados */
+@media (max-width: 767px) {
+    .filtros .filtros-contenido {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    .filtros.contenido-expandido .filtros-contenido {
+        max-height: 1000px; /* Suficiente para mostrar los filtros */
+        padding: var(--espaciado-mobile);
+    }
+    
+    /* Mejorar apariencia de select en mobile - aunque los navegadores móviles
+       tienen limitaciones, al menos el fondo y texto se adaptarán al tema */
+    .filtro-grupo select {
+        /* Forzar estilo consistente */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 }
 
 .filtro-grupo {
@@ -95,16 +211,20 @@ main {
     color: var(--color-texto);
 }
 
+.select-wrapper {
+    position: relative;
+}
+
 .filtro-grupo select {
     width: 100%;
     padding: 0.875rem; /* Más grande para mejor toque en mobile */
     border: 1px solid var(--color-borde);
     border-radius: var(--radio-borde);
     font-size: 1rem; /* Tamaño mínimo para evitar zoom en iOS */
-    background-color: white;
+    background-color: var(--color-fondo);
     color: var(--color-texto);
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.2s;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -113,6 +233,37 @@ main {
     background-position: right 0.75rem center;
     background-size: 12px;
     padding-right: 2.5rem;
+}
+
+[data-theme="dark"] .filtro-grupo select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e5e7eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+}
+
+.filtro-grupo select:focus {
+    outline: none;
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Mejorar apariencia de select en mobile - los select nativos no se pueden estilizar completamente,
+   pero al menos el fondo y texto se adaptarán al tema */
+.filtro-grupo select option {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    padding: 0.5rem;
+}
+
+/* Filtros colapsados por defecto en mobile */
+@media (max-width: 767px) {
+    .filtros {
+        /* Los filtros empiezan colapsados en mobile */
+    }
+    
+    .filtros:not(.contenido-expandido) .filtros-contenido {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 
 .filtro-grupo select:hover:not(:disabled) {
@@ -149,8 +300,9 @@ main {
 
 .estado-carga p {
     margin-top: 1rem;
-    color: #6b7280;
+    color: var(--color-texto);
     font-size: 0.9rem;
+    opacity: 0.7;
 }
 
 .spinner {
@@ -180,6 +332,12 @@ main {
     line-height: 1.5;
 }
 
+[data-theme="dark"] .mensaje-error {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
 .mensaje-error.oculto {
     display: none;
 }
@@ -190,7 +348,7 @@ main {
 
 /* Contenedor de análisis - Mobile First */
 .contenedor-analisis {
-    background-color: white;
+    background-color: var(--color-fondo);
     padding: 1rem;
     border-radius: var(--radio-borde);
     border: 1px solid var(--color-borde);
@@ -246,10 +404,11 @@ main {
 .analisis-texto h3 {
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #374151;
+    color: var(--color-texto);
     font-weight: 600;
     font-size: 1.1rem;
     line-height: 1.4;
+    opacity: 0.9;
 }
 
 .analisis-texto h3.subtitulo {
