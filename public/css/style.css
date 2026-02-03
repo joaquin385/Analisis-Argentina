@@ -1,0 +1,433 @@
+/* Reset y variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-fondo: #ffffff;
+    --color-texto: #1a1a1a;
+    --color-acento: #2563eb;
+    --color-borde: #e5e7eb;
+    --color-error: #dc2626;
+    --color-exito: #16a34a;
+    --espaciado-mobile: 1rem;
+    --espaciado-desktop: 2rem;
+    --radio-borde: 0.5rem;
+    --tamaño-fuente-base: 16px; /* Mínimo para evitar zoom en iOS */
+}
+
+html {
+    font-size: var(--tamaño-fuente-base);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+/* Header - Mobile First */
+header {
+    background-color: var(--color-acento);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 0.25rem;
+}
+
+header .subtitulo-ia {
+    font-size: 0.75rem;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* Main - Mobile First */
+main {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: var(--espaciado-mobile);
+    width: 100%;
+}
+
+/* Filtros - Mobile First */
+.filtros {
+    background-color: #f9fafb;
+    padding: var(--espaciado-mobile);
+    border-radius: var(--radio-borde);
+    margin-bottom: var(--espaciado-mobile);
+    border: 1px solid var(--color-borde);
+}
+
+.filtro-grupo {
+    margin-bottom: 1.25rem;
+}
+
+.filtro-grupo:last-child {
+    margin-bottom: 0;
+}
+
+.filtro-grupo label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-texto);
+}
+
+.filtro-grupo select {
+    width: 100%;
+    padding: 0.875rem; /* Más grande para mejor toque en mobile */
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-borde);
+    font-size: 1rem; /* Tamaño mínimo para evitar zoom en iOS */
+    background-color: white;
+    color: var(--color-texto);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.filtro-grupo select:hover:not(:disabled) {
+    border-color: var(--color-acento);
+}
+
+.filtro-grupo select:focus {
+    outline: none;
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filtro-grupo select:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Contenido */
+.contenido {
+    min-height: 200px;
+    width: 100%;
+}
+
+/* Estados de carga */
+.estado-carga {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.estado-carga.oculto {
+    display: none;
+}
+
+.estado-carga p {
+    margin-top: 1rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    border: 3px solid var(--color-borde);
+    border-top: 3px solid var(--color-acento);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mensajes de error */
+.mensaje-error {
+    background-color: #fef2f2;
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+    padding: 1rem;
+    border-radius: var(--radio-borde);
+    margin-bottom: var(--espaciado-mobile);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.mensaje-error.oculto {
+    display: none;
+}
+
+.mensaje-error p {
+    margin: 0;
+}
+
+/* Contenedor de análisis - Mobile First */
+.contenedor-analisis {
+    background-color: white;
+    padding: 1rem;
+    border-radius: var(--radio-borde);
+    border: 1px solid var(--color-borde);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.contenedor-analisis.oculto {
+    display: none;
+}
+
+.analisis-texto {
+    color: var(--color-texto);
+    line-height: 1.75;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Títulos principales (h1) */
+.analisis-texto h1.titulo-principal {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--color-acento);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    border-bottom: 2px solid var(--color-acento);
+    padding-bottom: 0.5rem;
+}
+
+/* Títulos de sección (h2) */
+.analisis-texto h2.titulo-seccion,
+.analisis-texto h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-acento);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.4;
+}
+
+.analisis-texto h2:first-child,
+.analisis-texto h2.titulo-seccion:first-child {
+    margin-top: 0;
+}
+
+/* Subtítulos (h3) */
+.analisis-texto h3.titulo-seccion,
+.analisis-texto h3.subtitulo,
+.analisis-texto h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #374151;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.analisis-texto h3.subtitulo {
+    color: var(--color-acento);
+    font-size: 1.15rem;
+    margin-top: 1.25rem;
+}
+
+/* Separador horizontal */
+.analisis-texto hr.separador {
+    border: none;
+    border-top: 2px solid var(--color-borde);
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.analisis-texto p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.analisis-texto ul,
+.analisis-texto ol {
+    margin-left: 1.25rem;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+}
+
+.analisis-texto li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+.analisis-texto strong {
+    font-weight: 600;
+}
+
+.analisis-texto em {
+    font-style: italic;
+}
+
+/* Mejorar legibilidad en mobile */
+.analisis-texto * {
+    max-width: 100%;
+}
+
+.analisis-texto img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Utilidades */
+.oculto {
+    display: none;
+}
+
+/* Responsive - Tablet (768px+) */
+@media (min-width: 768px) {
+    :root {
+        --espaciado-mobile: 1.5rem;
+    }
+
+    header {
+        padding: 1.25rem;
+    }
+
+    header h1 {
+        font-size: 1.75rem;
+    }
+
+    header .subtitulo-ia {
+        font-size: 0.85rem;
+    }
+
+    main {
+        padding: var(--espaciado-desktop);
+        max-width: 1200px;
+    }
+
+    .filtros {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .filtro-grupo {
+        margin-bottom: 0;
+    }
+
+    .contenedor-analisis {
+        padding: 2rem;
+    }
+
+    .analisis-texto {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .analisis-texto h1.titulo-principal {
+        font-size: 1.75rem;
+    }
+
+    .analisis-texto h2.titulo-seccion,
+    .analisis-texto h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .analisis-texto h3.titulo-seccion,
+    .analisis-texto h3.subtitulo,
+    .analisis-texto h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Responsive - Desktop (1024px+) */
+@media (min-width: 1024px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header .subtitulo-ia {
+        font-size: 0.9rem;
+    }
+
+    .analisis-texto {
+        max-width: 900px;
+        margin: 0 auto;
+        font-size: 1.05rem;
+    }
+
+    .analisis-texto h1.titulo-principal {
+        font-size: 2rem;
+    }
+
+    .analisis-texto h2.titulo-seccion,
+    .analisis-texto h2 {
+        font-size: 1.75rem;
+    }
+
+    .analisis-texto h3.titulo-seccion,
+    .analisis-texto h3.subtitulo,
+    .analisis-texto h3 {
+        font-size: 1.35rem;
+    }
+}
+
+/* Mejoras para pantallas muy pequeñas (< 360px) */
+@media (max-width: 359px) {
+    main {
+        padding: 0.75rem;
+    }
+
+    .filtros {
+        padding: 0.75rem;
+    }
+
+    .contenedor-analisis {
+        padding: 0.75rem;
+    }
+
+    header h1 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (hover: none) and (pointer: coarse) {
+    .filtro-grupo select {
+        min-height: 44px; /* Tamaño mínimo recomendado para toque */
+        padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+    }
+}
+
+/* Prevenir zoom en iOS al hacer focus en inputs */
+@supports (-webkit-touch-callout: none) {
+    .filtro-grupo select {
+        font-size: 16px; /* Evita zoom automático en iOS */
+    }
+}

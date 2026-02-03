@@ -1,0 +1,150 @@
+{
+  "pais": "Argentina",
+  "categorias": [
+    {
+      "id": "desarrollo_economico_y_empleo",
+      "nombre": "Desarrollo económico y empleo",
+      "subcategorias": [
+        { "id": "politica_macroeconomica", "nombre": "Política macroeconómica" },
+        { "id": "politica_laboral_y_empleo", "nombre": "Política laboral y empleo" },
+        { "id": "politica_industrial_y_competitividad", "nombre": "Política industrial y competitividad" },
+        { "id": "comercio_exterior_e_inversion", "nombre": "Comercio exterior e inversión" },
+        { "id": "innovacion_ciencia_y_tecnologia", "nombre": "Innovación, ciencia y tecnología" },
+        { "id": "pymes_y_emprendimientos", "nombre": "Pymes y emprendimientos" }
+      ]
+    },
+    {
+      "id": "educacion",
+      "nombre": "Educación",
+      "subcategorias": [
+        { "id": "educacion_inicial_y_primaria", "nombre": "Educación inicial y primaria" },
+        { "id": "educacion_secundaria", "nombre": "Educación secundaria" },
+        { "id": "educacion_tecnica_y_formacion_profesional", "nombre": "Educación técnica y formación profesional" },
+        { "id": "educacion_superior", "nombre": "Educación superior" },
+        { "id": "calidad_educativa_y_evaluacion", "nombre": "Calidad educativa y evaluación" },
+        { "id": "inclusion_educativa", "nombre": "Inclusión educativa" }
+      ]
+    },
+    {
+      "id": "salud",
+      "nombre": "Salud",
+      "subcategorias": [
+        { "id": "atencion_primaria_y_prevencion", "nombre": "Atención primaria y prevención" },
+        { "id": "hospitales_y_atencion_especializada", "nombre": "Hospitales y atención especializada" },
+        { "id": "salud_publica", "nombre": "Salud pública" },
+        { "id": "financiamiento_del_sistema", "nombre": "Financiamiento del sistema" },
+        { "id": "medicamentos_y_tecnologias_medicas", "nombre": "Medicamentos y tecnologías médicas" },
+        { "id": "salud_mental_y_adicciones", "nombre": "Salud mental y adicciones" }
+      ]
+    },
+    {
+      "id": "seguridad_publica_y_justicia",
+      "nombre": "Seguridad pública y justicia",
+      "subcategorias": [
+        { "id": "prevencion_del_delito", "nombre": "Prevención del delito" },
+        { "id": "policia_y_fuerzas_de_seguridad", "nombre": "Policía y fuerzas de seguridad" },
+        { "id": "sistema_judicial", "nombre": "Sistema judicial" },
+        { "id": "sistema_penitenciario", "nombre": "Sistema penitenciario" },
+        { "id": "crimen_organizado", "nombre": "Crimen organizado" },
+        { "id": "violencias_especificas", "nombre": "Violencias específicas" }
+      ]
+    },
+    {
+      "id": "infraestructura_y_transporte",
+      "nombre": "Infraestructura y transporte",
+      "subcategorias": [
+        { "id": "transporte_urbano", "nombre": "Transporte urbano" },
+        { "id": "transporte_interurbano_y_logistica", "nombre": "Transporte interurbano y logística" },
+        { "id": "infraestructura_vial_y_ferroviaria", "nombre": "Infraestructura vial y ferroviaria" },
+        { "id": "puertos_y_aeropuertos", "nombre": "Puertos y aeropuertos" },
+        { "id": "telecomunicaciones_y_conectividad", "nombre": "Telecomunicaciones y conectividad" },
+        { "id": "obras_publicas_estrategicas", "nombre": "Obras públicas estratégicas" }
+      ]
+    },
+    {
+      "id": "energia_y_recursos_naturales",
+      "nombre": "Energía y recursos naturales",
+      "subcategorias": [
+        { "id": "matriz_energetica", "nombre": "Matriz energética" },
+        { "id": "hidrocarburos", "nombre": "Hidrocarburos" },
+        { "id": "energias_renovables", "nombre": "Energías renovables" },
+        { "id": "mineria", "nombre": "Minería" },
+        { "id": "recursos_hidricos", "nombre": "Recursos hídricos" },
+        { "id": "eficiencia_energetica", "nombre": "Eficiencia energética" }
+      ]
+    },
+    {
+      "id": "medio_ambiente_y_cambio_climatico",
+      "nombre": "Medio ambiente y cambio climático",
+      "subcategorias": [
+        { "id": "mitigacion_del_cambio_climatico", "nombre": "Mitigación del cambio climático" },
+        { "id": "adaptacion_climatica", "nombre": "Adaptación climática" },
+        { "id": "gestion_de_residuos", "nombre": "Gestión de residuos" },
+        { "id": "biodiversidad", "nombre": "Biodiversidad" },
+        { "id": "ordenamiento_territorial", "nombre": "Ordenamiento territorial" },
+        { "id": "regulacion_ambiental", "nombre": "Regulación ambiental" }
+      ]
+    },
+    {
+      "id": "desarrollo_social_y_reduccion_de_la_pobreza",
+      "nombre": "Desarrollo social y reducción de la pobreza",
+      "subcategorias": [
+        { "id": "transferencias_sociales", "nombre": "Transferencias sociales" },
+        { "id": "vivienda_y_habitat_social", "nombre": "Vivienda y hábitat social" },
+        { "id": "primera_infancia_y_nutricion", "nombre": "Primera infancia y nutrición" },
+        { "id": "inclusion_social", "nombre": "Inclusión social" },
+        { "id": "politicas_de_genero", "nombre": "Políticas de género" },
+        { "id": "desarrollo_comunitario", "nombre": "Desarrollo comunitario" }
+      ]
+    },
+    {
+      "id": "finanzas_publicas_y_administracion_del_estado",
+      "nombre": "Finanzas públicas y administración del Estado",
+      "subcategorias": [
+        { "id": "sistema_tributario", "nombre": "Sistema tributario" },
+        { "id": "presupuesto_y_gasto_publico", "nombre": "Presupuesto y gasto público" },
+        { "id": "empleo_publico", "nombre": "Empleo público" },
+        { "id": "modernizacion_del_estado", "nombre": "Modernización del Estado" },
+        { "id": "transparencia_y_anticorrupcion", "nombre": "Transparencia y anticorrupción" },
+        { "id": "compras_publicas", "nombre": "Compras públicas" }
+      ]
+    },
+    {
+      "id": "relaciones_exteriores",
+      "nombre": "Relaciones exteriores",
+      "subcategorias": [
+        { "id": "politica_exterior", "nombre": "Política exterior" },
+        { "id": "integracion_regional", "nombre": "Integración regional" },
+        { "id": "comercio_internacional", "nombre": "Comercio internacional" },
+        { "id": "cooperacion_internacional", "nombre": "Cooperación internacional" },
+        { "id": "migraciones", "nombre": "Migraciones" },
+        { "id": "geopolitica_y_defensa", "nombre": "Geopolítica y defensa" }
+      ]
+    },
+    {
+      "id": "vivienda_urbanismo_y_desarrollo_territorial",
+      "nombre": "Vivienda, urbanismo y desarrollo territorial",
+      "subcategorias": [
+        { "id": "politicas_de_vivienda", "nombre": "Políticas de vivienda" },
+        { "id": "urbanismo_y_uso_del_suelo", "nombre": "Urbanismo y uso del suelo" },
+        { "id": "transporte_urbano_integrado", "nombre": "Transporte urbano integrado" },
+        { "id": "servicios_publicos", "nombre": "Servicios públicos" },
+        { "id": "ciudades_inteligentes", "nombre": "Ciudades inteligentes" },
+        { "id": "desarrollo_regional", "nombre": "Desarrollo regional" }
+      ]
+    },
+    {
+      "id": "agricultura_alimentos_y_desarrollo_rural",
+      "nombre": "Agricultura, alimentos y desarrollo rural",
+      "subcategorias": [
+        { "id": "produccion_agropecuaria", "nombre": "Producción agropecuaria" },
+        { "id": "seguridad_alimentaria", "nombre": "Seguridad alimentaria" },
+        { "id": "agroindustria", "nombre": "Agroindustria" },
+        { "id": "tecnologia_agricola", "nombre": "Tecnología agrícola" },
+        { "id": "desarrollo_rural", "nombre": "Desarrollo rural" },
+        { "id": "bioseguridad", "nombre": "Bioseguridad" }
+      ]
+    }
+  ]
+}
+

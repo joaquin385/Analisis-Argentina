@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="description" content="Análisis mensual de Argentina por categorías y subcategorías">
+    <title>Análisis Argentina</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Análisis Argentina</h1>
+        <p class="subtitulo-ia">Análisis generado por inteligencia artificial</p>
+    </header>
+
+    <main>
+        <section class="filtros">
+            <div class="filtro-grupo">
+                <label for="selector-categoria">Categoría:</label>
+                <select id="selector-categoria">
+                    <option value="">Seleccione una categoría</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="selector-subcategoria">Subcategoría:</label>
+                <select id="selector-subcategoria" disabled>
+                    <option value="">Seleccione una subcategoría</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="selector-periodo">Período:</label>
+                <select id="selector-periodo" disabled>
+                    <option value="">Seleccione un período</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="contenido">
+            <div id="estado-carga" class="estado-carga oculto">
+                <div class="spinner"></div>
+                <p>Cargando análisis...</p>
+            </div>
+
+            <div id="mensaje-error" class="mensaje-error oculto">
+                <p></p>
+            </div>
+
+            <div id="contenedor-analisis" class="contenedor-analisis oculto">
+                <div id="analisis-texto" class="analisis-texto"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
