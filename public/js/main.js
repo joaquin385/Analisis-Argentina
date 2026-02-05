@@ -73,7 +73,9 @@ async function inicializar() {
 
 async function cargarCategorias() {
     try {
-        const response = await fetch('data/categorias.json');
+        // Agregar timestamp para evitar caché del navegador
+        const urlConCache = `data/categorias.json?t=${Date.now()}`;
+        const response = await fetch(urlConCache, { cache: 'no-store' });
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
@@ -131,7 +133,9 @@ async function cargarPeriodosDesdeCategoria(categoriaId, reemplazar = false) {
         }
         
         const rutaJSON = `data/${categoriaId}/${categoria.nombre}.json`;
-        const response = await fetch(rutaJSON);
+        // Agregar timestamp para evitar caché del navegador
+        const urlConCache = `${rutaJSON}?t=${Date.now()}`;
+        const response = await fetch(urlConCache, { cache: 'no-store' });
         
         if (response.ok) {
             const data = await response.json();
@@ -268,7 +272,9 @@ async function cargarAnalisis() {
             rutaJSON = `data/${estado.categoriaSeleccionada}/${categoria.nombre}.json`;
         }
         
-        const response = await fetch(rutaJSON);
+        // Agregar timestamp para evitar caché del navegador
+        const urlConCache = `${rutaJSON}?t=${Date.now()}`;
+        const response = await fetch(urlConCache, { cache: 'no-store' });
         
         if (!response.ok) {
             if (response.status === 404) {
