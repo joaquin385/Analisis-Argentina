@@ -18,6 +18,7 @@ const elementos = {
     mensajeError: document.getElementById('mensaje-error'),
     contenedorAnalisis: document.getElementById('contenedor-analisis'),
     analisisTexto: document.getElementById('analisis-texto'),
+    tituloAnalisis: document.getElementById('titulo-analisis'),
     filtrosToggle: document.getElementById('filtros-toggle'),
     filtrosContenido: document.getElementById('filtros-contenido'),
     filtrosSection: document.querySelector('.filtros'),
@@ -305,9 +306,118 @@ async function cargarAnalisis() {
 function renderizarAnalisis() {
     if (!estado.analisisActual) return;
     
+    // Actualizar título de la categoría/subcategoría
+    const categoria = estado.categorias.find(c => c.id === estado.categoriaSeleccionada);
+    if (categoria) {
+        if (estado.subcategoriaSeleccionada) {
+            const subcategoria = categoria.subcategorias.find(s => s.id === estado.subcategoriaSeleccionada);
+            if (subcategoria) {
+                elementos.tituloAnalisis.textContent = subcategoria.nombre;
+            }
+        } else {
+            elementos.tituloAnalisis.textContent = categoria.nombre;
+        }
+    }
+    
     // El análisis viene como texto plano, puede tener markdown básico
-    // Convertir markdown simple a HTML
     let texto = estado.analisisActual;
+    
+    // Dividir el texto en secciones principales
+    const secciones = dividirEnSecciones(texto);
+    
+    // Renderizar cada sección como un acordeón
+    let htmlAcordeones = '';
+    secciones.forEach((seccion, index) => {
+        const idSeccion = `seccion-${index}`;
+        const contenidoHTML = procesarMarkdown(seccion.contenido);
+        htmlAcordeones += `
+            <div class="acordeon-seccion">
+                <button class="acordeon-titulo" aria-expanded="false" aria-controls="${idSeccion}">
+                    <span class="acordeon-titulo-texto">${seccion.titulo}</span>
+                    <span class="acordeon-icono">▼</span>
+                </button>
+                <div class="acordeon-contenido oculto" id="${idSeccion}">
+                    ${contenidoHTML}
+                </div>
+            </div>
+        `;
+    });
+    
+    elementos.analisisTexto.innerHTML = htmlAcordeones;
+    
+    // Agregar event listeners a los botones de acordeón
+    const botonesAcordeon = elementos.analisisTexto.querySelectorAll('.acordeon-titulo');
+    botonesAcordeon.forEach(boton => {
+        boton.addEventListener('click', function() {
+            const contenido = this.nextElementSibling;
+            const icono = this.querySelector('.acordeon-icono');
+            const estaAbierto = !contenido.classList.contains('oculto');
+            
+            if (estaAbierto) {
+                contenido.classList.add('oculto');
+                icono.textContent = '▼';
+                this.setAttribute('aria-expanded', 'false');
+            } else {
+                contenido.classList.remove('oculto');
+                icono.textContent = '▲';
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+    
+    mostrarAnalisis();
+}
+
+function dividirEnSecciones(texto) {
+    const secciones = [];
+    const lineas = texto.split('\n');
+    
+    let seccionActual = null;
+    let contenidoActual = [];
+    
+    for (let i = 0; i < lineas.length; i++) {
+        const linea = lineas[i].trim();
+        
+        // Detectar inicio de sección: "### 1. Situación anterior", "### 2. Situación actual", "### 3. Indicadores"
+        const matchSeccion = linea.match(/^###\s+(\d+)\.\s+(.+)$/);
+        if (matchSeccion) {
+            // Guardar sección anterior si existe
+            if (seccionActual) {
+                secciones.push({
+                    titulo: seccionActual.titulo,
+                    contenido: contenidoActual.join('\n')
+                });
+            }
+            
+            // Iniciar nueva sección
+            const numero = matchSeccion[1];
+            const titulo = matchSeccion[2];
+            
+            // Usar el título exacto del análisis
+            seccionActual = { titulo: titulo };
+            contenidoActual = [];
+            continue;
+        }
+        
+        // Si estamos en una sección, agregar la línea al contenido
+        if (seccionActual) {
+            contenidoActual.push(lineas[i]); // Mantener formato original
+        }
+    }
+    
+    // Agregar última sección
+    if (seccionActual) {
+        secciones.push({
+            titulo: seccionActual.titulo,
+            contenido: contenidoActual.join('\n')
+        });
+    }
+    
+    return secciones;
+}
+
+function procesarMarkdown(texto) {
+    if (!texto) return '';
     
     // Primero, procesar línea por línea para detectar títulos
     const lineas = texto.split('\n');
@@ -316,30 +426,21 @@ function renderizarAnalisis() {
     for (let i = 0; i < lineas.length; i++) {
         let linea = lineas[i].trim();
         
-        // Títulos con ### (h3)
+        // Títulos con ### (h3) - pero ya los procesamos, así que los ignoramos aquí
         if (linea.match(/^###\s+/)) {
-            const titulo = linea.replace(/^###\s+/, '');
-            lineasProcesadas.push(`<h3 class="titulo-seccion">${titulo}</h3>`);
-            continue;
+            continue; // Ya procesado en dividirEnSecciones
         }
         
         // Títulos con ## (h2)
         if (linea.match(/^##\s+/)) {
             const titulo = linea.replace(/^##\s+/, '');
-            lineasProcesadas.push(`<h2 class="titulo-principal">${titulo}</h2>`);
+            lineasProcesadas.push(`<h2 class="titulo-seccion">${titulo}</h2>`);
             continue;
         }
         
         // Títulos con # (h1)
         if (linea.match(/^#\s+/)) {
             const titulo = linea.replace(/^#\s+/, '');
-            lineasProcesadas.push(`<h1 class="titulo-principal">${titulo}</h1>`);
-            continue;
-        }
-        
-        // Títulos con **número. Título** (h2)
-        if (linea.match(/^\*\*\d+\.\s+.*\*\*$/)) {
-            const titulo = linea.replace(/\*\*/g, '');
             lineasProcesadas.push(`<h2 class="titulo-seccion">${titulo}</h2>`);
             continue;
         }
@@ -366,13 +467,13 @@ function renderizarAnalisis() {
     }
     
     // Unir las líneas y procesar el resto del markdown
-    texto = lineasProcesadas.join('\n');
+    let textoProcesado = lineasProcesadas.join('\n');
     
-    // Convertir **texto** a <strong>texto</strong> (pero no los que ya procesamos)
-    texto = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Convertir **texto** a <strong>texto</strong>
+    textoProcesado = textoProcesado.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     
     // Convertir saltos de línea dobles a párrafos
-    texto = texto.split('\n\n').map(parrafo => {
+    textoProcesado = textoProcesado.split('\n\n').map(parrafo => {
         parrafo = parrafo.trim();
         if (!parrafo) return '';
         
@@ -386,7 +487,6 @@ function renderizarAnalisis() {
             const items = parrafo.split(/\n(?=\d+\.\s)/);
             return '<ol class="lista-numerada">' + items.map(item => {
                 const textoItem = item.replace(/^\d+\.\s*/, '').trim();
-                // Procesar negritas dentro de los items
                 const textoProcesado = textoItem.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 return `<li>${textoProcesado}</li>`;
             }).join('') + '</ol>';
@@ -397,7 +497,6 @@ function renderizarAnalisis() {
             const items = parrafo.split(/\n(?=[-*]\s)/);
             return '<ul class="lista-viñetas">' + items.map(item => {
                 const textoItem = item.replace(/^[-*]\s*/, '').trim();
-                // Procesar negritas dentro de los items
                 const textoProcesado = textoItem.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 return `<li>${textoProcesado}</li>`;
             }).join('') + '</ul>';
@@ -409,8 +508,7 @@ function renderizarAnalisis() {
         return `<p>${parrafo}</p>`;
     }).join('');
     
-    elementos.analisisTexto.innerHTML = texto;
-    mostrarAnalisis();
+    return textoProcesado;
 }
 
 function mostrarCargando() {
@@ -438,6 +536,7 @@ function mostrarAnalisis() {
 function ocultarAnalisis() {
     elementos.contenedorAnalisis.classList.add('oculto');
     elementos.analisisTexto.innerHTML = '';
+    elementos.tituloAnalisis.textContent = '';
 }
 
 function actualizarURL() {
